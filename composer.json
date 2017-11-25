@@ -1,5 +1,6 @@
 {
     "name":              "gaetanroger/slim-routes-loader",
+    "description":       "Register your Slim routes using a simple config file.",
     "type":              "library",
     "license":           "MIT",
     "version":           "0.1",
