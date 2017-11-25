@@ -209,10 +209,33 @@ class Logger implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        $this->logs[] = [
-            'level'   => $level,
-            'message' => $message,
-            'context' => $context,
-        ];
+        switch (strtoupper($level)) {
+            case 'DEBUG':
+                $this->debug($message, $context);
+                break;
+            case 'INFO':
+                $this->info($message, $context);
+                break;
+            case 'NOTICE':
+                $this->notice($message, $context);
+                break;
+            case 'WARNING':
+                $this->warning($message, $context);
+                break;
+            case 'ERROR':
+                $this->error($message, $context);
+                break;
+            case 'CRITICAL':
+                $this->critical($message, $context);
+                break;
+            case 'ALERT':
+                $this->alert($message, $context);
+                break;
+            case 'EMERGENCY':
+                $this->emergency($message, $context);
+                break;
+            default:
+                throw new \InvalidArgumentException("Level $level unknown.");
+        }
     }
 }

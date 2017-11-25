@@ -1,4 +1,6 @@
 # Slim routes loader
+[![Build Status](https://travis-ci.org/GaetanRoger/slim-routes-loader.svg?branch=master)](https://travis-ci.org/GaetanRoger/slim-routes-loader)
+
 When using [Slim PHP Framework](https://www.slimframework.com/),
 you need to register your routes. This library allows you to do so
 via a simple config file.
@@ -30,7 +32,7 @@ $routes = [
 $slim = new \Slim\App();
 
 $loader = new Gaetanroger\SlimRoutesLoader\Loader($routes);
-$loader($slim);
+$loader->load($slim); // or $loader($slim)
 ```
 If you want to store your routes in another file, simply include them
 using a regular PHP `require`.
@@ -39,7 +41,7 @@ $routes = require __DIR__ '/myRoutes.php';
 $slim = new \Slim\App();
 
 $loader = new \Gaetanroger\SlimRoutesLoader\Loader($routes);
-$loader($slim);
+$loader($slim); // or $loader->load($slim)
 ```
 ### Json format
 If you prefer to write your routes as Json, simply use the `JsonLoader`.
@@ -60,7 +62,7 @@ If you prefer to write your routes as Json, simply use the `JsonLoader`.
 $slim = new \Slim\App();
 
 $loader = new \Gaetanroger\SlimRoutesLoader\JsonLoader($json);
-$loader($slim);
+$loader($slim); // or $loader->load($slim)
 ```
 The `$json` variable can contain a json string or the path to a json file containing 
 the routes.
@@ -78,7 +80,7 @@ routes:
 $slim = new \Slim\App();
 
 $loader = new \Gaetanroger\SlimRoutesLoader\YmlLoader($yml);
-$loader($slim);
+$loader($slim); // or $loader->load($slim)
 ```
 The `$yml` variable can contain a Yaml string or the path to a Yaml file containing 
 

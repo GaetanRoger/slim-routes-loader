@@ -55,7 +55,7 @@ routes:
         name: testName';
         
         $loader = new YmlLoader($yml);
-        $loader($this->slim);
+        $loader->load($this->slim);
         
         $r = $this->getRoutes();
         

@@ -12,6 +12,14 @@ namespace Gaetanroger\SlimRoutesLoader;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class YmlLoader
+ *
+ * Please see project's README.MD for correct syntax to use when calling this class.
+ *
+ * @link    https://github.com/GaetanRoger/slim-routes-loader Project's README.ME.
+ * @package Gaetanroger\SlimRoutesLoader
+ */
 class YmlLoader extends Loader
 {
     public function __construct(string $fileOrYml, ?LoggerInterface $logger = null)
