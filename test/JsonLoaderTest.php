@@ -66,7 +66,7 @@ class JsonLoaderTest extends AbstractLoaderTestCase
         }';
         
         $loader = new JsonLoader($json);
-        $loader($this->slim);
+        $loader->load($this->slim);
         
         $r = $this->getRoutes();
         

@@ -61,7 +61,7 @@ class LoaderTest extends AbstractLoaderTestCase
         ];
         
         $loader = new Loader($routes);
-        $loader($this->slim);
+        $loader->load($this->slim);
         
         $r = $this->getRoutes();
         
