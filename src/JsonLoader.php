@@ -11,6 +11,14 @@ namespace Gaetanroger\SlimRoutesLoader;
 
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class JsonLoader
+ *
+ * Please see project's README.MD for correct syntax to use when calling this class.
+ *
+ * @link    https://github.com/GaetanRoger/slim-routes-loader Project's README.ME.
+ * @package Gaetanroger\SlimRoutesLoader
+ */
 class JsonLoader extends Loader
 {
     public function __construct(string $fileOrJson, ?LoggerInterface $logger = null)

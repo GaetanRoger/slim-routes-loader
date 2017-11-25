@@ -12,7 +12,7 @@ namespace Gaetanroger\SlimRoutesLoader;
  */
 abstract class LoaderInterface
 {
-    public abstract function load(\Slim\App $slim): void;
+    public abstract function load(\Slim\App $slim, bool $throwIfError = false): void;
     
-    public abstract function __invoke(\Slim\App $slim): void;
+    public abstract function __invoke(\Slim\App $slim, bool $throwIfError = false): void;
 }
