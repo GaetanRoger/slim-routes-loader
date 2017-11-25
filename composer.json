@@ -3,7 +3,8 @@
     "description":       "Register your Slim routes using a simple config file.",
     "type":              "library",
     "license":           "MIT",
-    "version":           "0.1",
+    "version":           "0.2",
+    "time":              "2017-11-25",
     "authors":           [
         {
             "name":  "Gaétan ROGER",
