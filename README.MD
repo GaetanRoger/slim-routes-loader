@@ -1,5 +1,6 @@
 # Slim routes loader
 [![Build Status](https://travis-ci.org/GaetanRoger/slim-routes-loader.svg?branch=master)](https://travis-ci.org/GaetanRoger/slim-routes-loader)
+[![Coverage Status](https://coveralls.io/repos/github/GaetanRoger/slim-routes-loader/badge.svg?branch=master)](https://coveralls.io/github/GaetanRoger/slim-routes-loader?branch=master)
 
 When using [Slim PHP Framework](https://www.slimframework.com/),
 you need to register your routes. This library allows you to do so
