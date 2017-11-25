@@ -1,0 +1,36 @@
+{
+    "name":              "gaetanroger/slim-routes-loader",
+    "description":       "Register your Slim routes using a simple config file.",
+    "type":              "library",
+    "license":           "MIT",
+    "version":           "0.1",
+    "authors":           [
+        {
+            "name":  "Gaétan ROGER",
+            "email": "gaetanroger.fr@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require":           {
+        "slim/slim":    "^3.9",
+        "symfony/yaml": "^3.3",
+        "psr/log":      "^1.0"
+    },
+    "require-dev":       {
+        "phpunit/phpunit":             "^6.4",
+        "php-coveralls/php-coveralls": "^1.0"
+    },
+    "autoload":          {
+        "psr-4": {
+            "Gaetanroger\\SlimRoutesLoader\\": "src/"
+        }
+    },
+    "autoload-dev":      {
+        "psr-4": {
+            "Gaetanroger\\SlimRoutesLoaderTest\\": "test/"
+        }
+    },
+    "scripts":           {
+        "test": "phpunit"
+    }
+}
