@@ -4,91 +4,30 @@ namespace Gaetanroger\SlimRoutesLoaderTest;
 
 
 use Gaetanroger\SlimRoutesLoader\Loader;
-use PHPUnit\Framework\TestCase;
-use Slim\App as Slim;
-use Slim\Route;
+use Gaetanroger\SlimRoutesLoaderTest\Mock\Logger;
+use Slim\App;
 
-class LoaderTest extends TestCase
+class LoaderTest extends AbstractLoaderTestCase
 {
-    /**
-     * @var Slim $slim
-     */
-    private $slim;
-
-    /**
-     * Return routes registered in the Slim router.
-     *
-     * @return array
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     */
-    private function getRoutes(): array
-    {
-        return $this->slim->getContainer()->get('router')->getRoutes();
-    }
-
-    /**
-     * Assert values of a Route object.
-     *
-     * @param Route $route
-     * @param int $methodsCount
-     * @param array $methods
-     * @param string $name
-     * @param string $callable
-     * @param string $pattern
-     * @param int $groupsCount
-     * @param array $groupsPatterns
-     */
-    private function assertRoute(
-        Route $route,
-        int $methodsCount,
-        array $methods,
-        string $name,
-        string $callable,
-        string $pattern,
-        int $groupsCount,
-        array $groupsPatterns)
-    {
-        $this->assertCount($methodsCount, $route->getMethods());
-
-        foreach ($methods as $method) {
-            $this->assertContains($method, $route->getMethods());
-        }
-
-        $this->assertEquals($name, $route->getName());
-        $this->assertEquals($callable, $route->getCallable());
-        $this->assertEquals($pattern, $route->getPattern());
-        $this->assertCount($groupsCount, $route->getGroups());
-
-        foreach ($route->getGroups() as $group) {
-            $this->assertContains($group->getPattern(), $groupsPatterns);
-        }
-    }
-
-    protected function setUp()
-    {
-        $this->slim = new Slim();
-    }
-
+    private const ONE_ROUTE = [
+        'pattern' => '',
+        'routes'  => [
+            [
+                'pattern'  => '/',
+                'method'   => 'GET',
+                'callable' => 'testCallable',
+                'name'     => 'testName',
+            ],
+        ],
+    ];
+    
     public function testOneRoute()
     {
-        $routes = [
-            'pattern' => '',
-            'routes' => [
-                [
-                    'pattern' => '/',
-                    'method' => 'GET',
-                    'callable' => 'testCallable',
-                    'name' => 'testName'
-                ]
-            ]
-        ];
-
-        $loader = new Loader($routes);
+        $loader = new Loader(self::ONE_ROUTE);
         $loader($this->slim);
-
+        
         $r = $this->getRoutes();
-
+        
         $this->assertNotEmpty($r);
         $this->assertRoute(
             $r['route0'],
@@ -101,31 +40,31 @@ class LoaderTest extends TestCase
             ['']
         );
     }
-
+    
     public function testOneRouteInOneSubGroup()
     {
         $routes = [
             'pattern' => '',
-            'routes' => [
+            'routes'  => [
                 [
                     'pattern' => '/test',
-                    'routes' => [
+                    'routes'  => [
                         [
-                            'pattern' => '/',
-                            'method' => 'GET',
+                            'pattern'  => '/',
+                            'method'   => 'GET',
                             'callable' => 'testCallable',
-                            'name' => 'testName'
-                        ]
-                    ]
-                ]
-            ]
+                            'name'     => 'testName',
+                        ],
+                    ],
+                ],
+            ],
         ];
-
+        
         $loader = new Loader($routes);
         $loader($this->slim);
-
+        
         $r = $this->getRoutes();
-
+        
         $this->assertNotEmpty($r);
         $this->assertRoute(
             $r['route0'],
@@ -138,38 +77,38 @@ class LoaderTest extends TestCase
             ['', '/test']
         );
     }
-
+    
     public function testMultipleRoutes()
     {
         $routes = [
             'pattern' => '',
-            'routes' => [
+            'routes'  => [
                 [
-                    'pattern' => '/one',
-                    'method' => 'GET',
+                    'pattern'  => '/one',
+                    'method'   => 'GET',
                     'callable' => 'testCallable1',
-                    'name' => 'testName1'
+                    'name'     => 'testName1',
                 ],
                 [
-                    'pattern' => '/two',
-                    'method' => 'POST',
+                    'pattern'  => '/two',
+                    'method'   => 'POST',
                     'callable' => 'testCallable2',
-                    'name' => 'testName2'
+                    'name'     => 'testName2',
                 ],
                 [
-                    'pattern' => '/three',
-                    'method' => 'PUT',
+                    'pattern'  => '/three',
+                    'method'   => 'PUT',
                     'callable' => 'testCallable3',
-                    'name' => 'testName3'
-                ]
-            ]
+                    'name'     => 'testName3',
+                ],
+            ],
         ];
-
+        
         $loader = new Loader($routes);
         $loader($this->slim);
-
+        
         $r = $this->getRoutes();
-
+        
         $this->assertNotEmpty($r);
         $this->assertCount(3, $r);
         $this->assertRoute(
@@ -203,49 +142,49 @@ class LoaderTest extends TestCase
             ['']
         );
     }
-
-    public function testComplexe()
+    
+    public function testComplex()
     {
         $routes = [
             'pattern' => '',
-            'routes' => [
+            'routes'  => [
                 [
-                    'pattern' => '/one',
-                    'method' => 'GET',
+                    'pattern'  => '/one',
+                    'method'   => 'GET',
                     'callable' => 'testCallable1',
-                    'name' => 'testName1'
+                    'name'     => 'testName1',
                 ],
                 [
-                    'pattern' => '/two',
-                    'method' => 'POST',
+                    'pattern'  => '/two',
+                    'method'   => 'POST',
                     'callable' => 'testCallable2',
-                    'name' => 'testName2'
+                    'name'     => 'testName2',
                 ],
                 [
                     'pattern' => '/group',
-                    'routes' => [
+                    'routes'  => [
                         [
-                            'pattern' => '/one',
-                            'method' => 'GET',
+                            'pattern'  => '/one',
+                            'method'   => 'GET',
                             'callable' => 'testCallable1',
-                            'name' => 'testName1'
+                            'name'     => 'testName1',
                         ],
                         [
-                            'pattern' => '/two',
-                            'method' => 'POST',
+                            'pattern'  => '/two',
+                            'method'   => 'POST',
                             'callable' => 'testCallable2',
-                            'name' => 'testName2'
-                        ]
-                    ]
-                ]
-            ]
+                            'name'     => 'testName2',
+                        ],
+                    ],
+                ],
+            ],
         ];
-
+        
         $loader = new Loader($routes);
         $loader($this->slim);
-
+        
         $r = $this->getRoutes();
-
+        
         $this->assertNotEmpty($r);
         $this->assertCount(4, $r);
         $this->assertRoute(
@@ -288,5 +227,17 @@ class LoaderTest extends TestCase
             2,
             ['', '/group']
         );
+    }
+    
+    public function testLogger()
+    {
+        $logger = new Logger();
+        $slim = new App();
+        
+        $loader = new Loader(self::ONE_ROUTE, $logger);
+        $loader($slim);
+        
+        $this->assertCount(1, $logger->debugs);
+        $this->assertEquals('Registered new GET route: /', $logger->debugs[0]['message']);
     }
 }
