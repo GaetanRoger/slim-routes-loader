@@ -1,4 +1,6 @@
 # Slim routes loader
+[![Build Status](https://travis-ci.org/GaetanRoger/slim-routes-loader.svg?branch=master)](https://travis-ci.org/GaetanRoger/slim-routes-loader)
+
 When using [Slim PHP Framework](https://www.slimframework.com/),
 you need to register your routes. This library allows you to do so
 via a simple config file.
