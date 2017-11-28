@@ -9,17 +9,7 @@ use Slim\App;
 
 class LoaderTest extends AbstractLoaderTestCase
 {
-    private const ONE_ROUTE = [
-        'pattern' => '',
-        'routes'  => [
-            [
-                'pattern'  => '/',
-                'method'   => 'GET',
-                'callable' => 'testCallable',
-                'name'     => 'testName',
-            ],
-        ],
-    ];
+    
     
     public function testOneRoute()
     {
@@ -43,22 +33,7 @@ class LoaderTest extends AbstractLoaderTestCase
     
     public function testOneRouteInOneSubGroup()
     {
-        $routes = [
-            'pattern' => '',
-            'routes'  => [
-                [
-                    'pattern' => '/test',
-                    'routes'  => [
-                        [
-                            'pattern'  => '/',
-                            'method'   => 'GET',
-                            'callable' => 'testCallable',
-                            'name'     => 'testName',
-                        ],
-                    ],
-                ],
-            ],
-        ];
+        $routes = self::ONE_ROUTE_IN_SUBGROUP;
         
         $loader = new Loader($routes);
         $loader->load($this->slim);
@@ -80,29 +55,7 @@ class LoaderTest extends AbstractLoaderTestCase
     
     public function testMultipleRoutes()
     {
-        $routes = [
-            'pattern' => '',
-            'routes'  => [
-                [
-                    'pattern'  => '/one',
-                    'method'   => 'GET',
-                    'callable' => 'testCallable1',
-                    'name'     => 'testName1',
-                ],
-                [
-                    'pattern'  => '/two',
-                    'method'   => 'POST',
-                    'callable' => 'testCallable2',
-                    'name'     => 'testName2',
-                ],
-                [
-                    'pattern'  => '/three',
-                    'method'   => 'PUT',
-                    'callable' => 'testCallable3',
-                    'name'     => 'testName3',
-                ],
-            ],
-        ];
+        $routes = self::MULTIPLE_ROUTES;
         
         $loader = new Loader($routes);
         $loader($this->slim);
@@ -145,40 +98,7 @@ class LoaderTest extends AbstractLoaderTestCase
     
     public function testComplex()
     {
-        $routes = [
-            'pattern' => '',
-            'routes'  => [
-                [
-                    'pattern'  => '/one',
-                    'method'   => 'GET',
-                    'callable' => 'testCallable1',
-                    'name'     => 'testName1',
-                ],
-                [
-                    'pattern'  => '/two',
-                    'method'   => 'POST',
-                    'callable' => 'testCallable2',
-                    'name'     => 'testName2',
-                ],
-                [
-                    'pattern' => '/group',
-                    'routes'  => [
-                        [
-                            'pattern'  => '/one',
-                            'method'   => 'GET',
-                            'callable' => 'testCallable1',
-                            'name'     => 'testName1',
-                        ],
-                        [
-                            'pattern'  => '/two',
-                            'method'   => 'POST',
-                            'callable' => 'testCallable2',
-                            'name'     => 'testName2',
-                        ],
-                    ],
-                ],
-            ],
-        ];
+        $routes = self::COMPLEX_ROUTES;
         
         $loader = new Loader($routes);
         $loader($this->slim);

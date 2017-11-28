@@ -15,10 +15,100 @@ use Slim\Route;
 
 class AbstractLoaderTestCase extends TestCase
 {
+    protected const ONE_ROUTE = [
+        'pattern' => '',
+        'routes'  => [
+            [
+                'pattern'  => '/',
+                'method'   => 'GET',
+                'callable' => 'testCallable',
+                'name'     => 'testName',
+            ],
+        ],
+    ];
+    
+    protected const ONE_ROUTE_IN_SUBGROUP = [
+        'pattern' => '',
+        'routes'  => [
+            [
+                'pattern' => '/test',
+                'routes'  => [
+                    [
+                        'pattern'  => '/',
+                        'method'   => 'GET',
+                        'callable' => 'testCallable',
+                        'name'     => 'testName',
+                    ],
+                ],
+            ],
+        ],
+    ];
+    
+    protected const MULTIPLE_ROUTES = [
+        'pattern' => '',
+        'routes'  => [
+            [
+                'pattern'  => '/one',
+                'method'   => 'GET',
+                'callable' => 'testCallable1',
+                'name'     => 'testName1',
+            ],
+            [
+                'pattern'  => '/two',
+                'method'   => 'POST',
+                'callable' => 'testCallable2',
+                'name'     => 'testName2',
+            ],
+            [
+                'pattern'  => '/three',
+                'method'   => 'PUT',
+                'callable' => 'testCallable3',
+                'name'     => 'testName3',
+            ],
+        ],
+    ];
+    
+    protected const COMPLEX_ROUTES = [
+        'pattern' => '',
+        'routes'  => [
+            [
+                'pattern'  => '/one',
+                'method'   => 'GET',
+                'callable' => 'testCallable1',
+                'name'     => 'testName1',
+            ],
+            [
+                'pattern'  => '/two',
+                'method'   => 'POST',
+                'callable' => 'testCallable2',
+                'name'     => 'testName2',
+            ],
+            [
+                'pattern' => '/group',
+                'routes'  => [
+                    [
+                        'pattern'  => '/one',
+                        'method'   => 'GET',
+                        'callable' => 'testCallable1',
+                        'name'     => 'testName1',
+                    ],
+                    [
+                        'pattern'  => '/two',
+                        'method'   => 'POST',
+                        'callable' => 'testCallable2',
+                        'name'     => 'testName2',
+                    ],
+                ],
+            ],
+        ],
+    ];
+    
+    
     /**
      * @var Slim $slim
      */
     protected $slim;
+    
     
     /**
      * Return routes registered in the Slim router.
