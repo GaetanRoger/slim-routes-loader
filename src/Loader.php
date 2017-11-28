@@ -82,25 +82,26 @@ class Loader extends LoaderInterface
     {
         $loader = $this;
         
-        $slim->group($group['pattern'], function () use ($group, $slim, $loader) {
+        $slim->group($group[RoutesConstants::PATTERN_KEY], function () use ($group, $slim, $loader) {
             
             
-            foreach ($group['routes'] as $route) {
-                if (isset($route['routes'])) {
+            foreach ($group[RoutesConstants::ROUTES_KEY] as $route) {
+                if (isset($route[RoutesConstants::ROUTES_KEY])) {
                     $loader->addGroup($route, $slim);
                 } else {
-                    $pattern = $route['pattern'];
-                    $callable = $route['callable'];
-                    $name = $route['name'] ?? '';
+                    $pattern = $route[RoutesConstants::PATTERN_KEY] ?? RoutesConstants::PATTERN_DEFAULT_VALUE;
+                    $callable = $route[RoutesConstants::CALLABLE_KEY];
+                    $name = $route[RoutesConstants::NAME_KEY] ?? RoutesConstants::NAME_DEFAULT_VALUE;
+                    $method = $route[RoutesConstants::METHOD_KEY] ?? RoutesConstants::METHOD_DEFAULT_VALUE;
                     
-                    self::createRoute($route, $slim, $pattern, $callable, $name, $loader);
+                    self::createRoute($method, $slim, $pattern, $callable, $name, $loader);
                 }
             }
         });
     }
     
     /**
-     * @param array           $route
+     * @param array           $method
      * @param Slim            $slim
      * @param string          $pattern
      * @param callable|string $callable
@@ -108,14 +109,14 @@ class Loader extends LoaderInterface
      * @param Loader          $loader
      */
     private static function createRoute(
-        array $route,
+        string $method,
         Slim $slim,
         string $pattern,
         $callable,
         string $name,
         Loader $loader
     ): void {
-        switch ($route['method']) {
+        switch ($method) {
             case 'GET':
                 $slim->get($pattern, $callable)->setName($name);
                 $loader->logRegistration('GET', $pattern, $callable, $name);
@@ -141,7 +142,7 @@ class Loader extends LoaderInterface
                 $loader->logRegistration('DELETE', $pattern, $callable, $name);
                 break;
             default:
-                $message = $loader->logError($route['method'], $pattern, $callable, $name);
+                $message = $loader->logError($method, $pattern, $callable, $name);
                 
                 if ($loader->throwIfError) {
                     throw new \InvalidArgumentException($message);
@@ -162,10 +163,10 @@ class Loader extends LoaderInterface
             'debug',
             "Registered new $method route: $pattern",
             [
-                'method'   => $method,
-                'pattern'  => $pattern,
-                'callable' => $callable,
-                'name'     => $name,
+                RoutesConstants::METHOD_KEY   => $method,
+                RoutesConstants::PATTERN_KEY  => $pattern,
+                RoutesConstants::CALLABLE_KEY => $callable,
+                RoutesConstants::NAME_KEY     => $name,
             ]
         );
     }
@@ -174,10 +175,10 @@ class Loader extends LoaderInterface
     {
         $message = "Route method unknown: $method";
         $context = [
-            'method'   => $method,
-            'pattern'  => $pattern,
-            'callable' => $callable,
-            'name'     => $name,
+            RoutesConstants::METHOD_KEY   => $method,
+            RoutesConstants::PATTERN_KEY  => $pattern,
+            RoutesConstants::CALLABLE_KEY => $callable,
+            RoutesConstants::NAME_KEY     => $name,
         ];
         
         if ($this->throwIfError) {
