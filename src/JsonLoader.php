@@ -21,8 +21,11 @@ use Psr\Log\LoggerInterface;
  */
 class JsonLoader extends Loader
 {
-    public function __construct(string $fileOrJson, ?LoggerInterface $logger = null)
-    {
+    public function __construct(
+        string $fileOrJson,
+        ?LoggerInterface $logger = null,
+        bool $validateSyntaxBeforehand = true
+    ) {
         if (is_file($fileOrJson)) {
             $fileOrJson = file_get_contents($fileOrJson);
         }
@@ -33,6 +36,6 @@ class JsonLoader extends Loader
             throw new \InvalidArgumentException("JsonLoader is not able to parse the json file/string to PHP arrays. The Json is invalid or too deep.");
         }
         
-        parent::__construct($decoded, $logger);
+        parent::__construct($decoded, $logger, $validateSyntaxBeforehand);
     }
 }

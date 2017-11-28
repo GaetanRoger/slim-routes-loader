@@ -42,8 +42,9 @@ class Loader extends LoaderInterface
      * @param array                $routes
      * @param null|LoggerInterface $logger
      */
-    public function __construct(array $routes, ?LoggerInterface $logger = null)
+    public function __construct(array $routes, ?LoggerInterface $logger = null, bool $validateSyntaxBeforehand = true)
     {
+        RoutesSyntaxValidator::validate($routes);
         $this->routes = $routes;
         $this->logger = $logger;
     }
